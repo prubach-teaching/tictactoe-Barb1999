@@ -12,75 +12,75 @@ public class TicTacToe {
         File boardFile = new File(boardFileName);
         System.out.println(boardFile.getAbsolutePath());
 
-        Scanner p = new Scanner(boardFile);
-        int kolumny = 5;
-        int wiersze = 3;
-         
-            char[][] Gra = new char[wiersze][kolumny];
+        Scanner scanner = new Scanner(boardFile);
+
+            int totalRow = 3;
+            int totalColumn = 5;
+            char[][] GameBoard = new char[totalRow][totalColumn];
 
 
-            for (int rzad = 0; p.hasNextLine() && rzad < wiersze; rzad++) {
-                char[] abc = p.nextLine().toCharArray();
-                for (int i = 0; i < kolumny && i < abc.length; i++) {
-                    Gra[rzad][i] = abc[i];
+            for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
+                char[] chars = scanner.nextLine().toCharArray();
+                for (int i = 0; i < totalColumn && i < chars.length; i++) {
+                    GameBoard[row][i] = chars[i];
                 }
             }
 
-            for (int m = 0; m < wiersze; m++) {
-                for (int n = 0; n < kolumny; n++) {
-                    if (Gra[m][n] == 'x') {
-                    	Gra[m][n] = 1;
+            for (int m = 0; m < totalRow; m++) {
+                for (int n = 0; n < totalColumn; n++) {
+                    if (GameBoard[m][n] == 'x') {
+                        GameBoard[m][n] = 1;
                     }
-                    else if (Gra[m][n] == 'o') {
-                    		Gra[m][n] = 100;
+                    else if (GameBoard[m][n] == 'o') {
+                            GameBoard[m][n] = 100;
                     }
-                    else if (Gra[m][n] == ';') {
-                    	    Gra[m][n] = 0;
+                    else if (GameBoard[m][n] == ';') {
+                        GameBoard[m][n] = 0;
                     }
                 }
 
             }
 
             //check rows for winning
-            for (int m=0; m<wiersze; m++) {
-                if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 3) {
+            for (int m=0; m<totalRow; m++) {
+                if ((GameBoard[m][0] + GameBoard[m][2] + GameBoard[m][4]) == 3) {
                     return Result.X_WON;
                 }
-                else if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 300) {
+                else if ((GameBoard[m][0] + GameBoard[m][2] + GameBoard[m][4]) == 300) {
                     return Result.O_WON;
                 }
             }
 
             //check columns for winning
-            for (int n=0; n<kolumny; n++) {
-                if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 3) {
+            for (int n=0; n<totalColumn; n++) {
+                if ((GameBoard[0][n] + GameBoard[1][n] + GameBoard[2][n]) == 3) {
                     return Result.X_WON;
                 }
-                else if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 300) {
+                else if ((GameBoard[0][n] + GameBoard[1][n] + GameBoard[2][n]) == 300) {
                     return Result.O_WON;
                 }
             }
 
             //check 1st diagonal for winning
-            if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 3) {
+            if ((GameBoard[0][0] + GameBoard[1][2] + GameBoard[2][4]) == 3) {
                 return Result.X_WON;
-            } else if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 300) {
+            } else if ((GameBoard[0][0] + GameBoard[1][2] + GameBoard[2][4]) == 300) {
                 return Result.O_WON;
             }
 
             //check 2nd diagonal for winning
-            if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 3) {
+            if ((GameBoard[0][4] + GameBoard[1][2] + GameBoard[2][0]) == 3) {
                 return Result.X_WON;
-            } else if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 300) {
+            } else if ((GameBoard[0][4] + GameBoard[1][2] + GameBoard[2][0]) == 300) {
                 return Result.O_WON;
             }
 
             //check for empty spaces
-            for (int m = 0; m < wiersze; m++) {
+            for (int m = 0; m < totalRow; m++) {
                 
-                for (int n = 0; n < kolumny; n++) {
+                for (int n = 0; n < totalColumn; n++) {
 
-                    if (Gra[m][n] != 1 && Gra[m][n] != 100 && Gra[m][n] != 0) {
+                    if (GameBoard[m][n] != 1 && GameBoard[m][n] != 100 && GameBoard[m][n] != 0) {
                         return Result.NOT_FINISHED;
                     }
                 }
@@ -88,7 +88,8 @@ public class TicTacToe {
         
         return Result.NO_WINNER;
     }
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws FileNotFoundException {
         Result res = checkBoard("boards/tick0.csv");
         System.out.println(res);
     }
