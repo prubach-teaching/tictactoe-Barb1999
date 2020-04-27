@@ -1,14 +1,14 @@
 package sgh;
 
 import java.io.File;
-
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TicTacToe {
 
     public enum Result { NOT_FINISHED, NO_WINNER, X_WON, O_WON }
 
-    public static Result checkBoard(String boardFileName) {
+    public static Result checkBoard(String boardFileName) throws FileNotFoundException {
         File boardFile = new File(boardFileName);
         System.out.println(boardFile.getAbsolutePath());
 
@@ -93,3 +93,4 @@ public class TicTacToe {
         Result res = checkBoard("boards/tick0.csv");
         System.out.println(res);
     }
+}
