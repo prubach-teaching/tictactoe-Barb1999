@@ -1,4 +1,5 @@
 package sgh;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -8,43 +9,8 @@ import java.util.Scanner;
 public class TicTacToe {
 
     public enum Result {NOT_FINISHED, NO_WINNER, X_WON, O_WON}
-    public static int [][] GetBoard(String boardName) throws FileNotFoundException {
-        
-        int[][] board = new int[3][3];
-        File boardFile = new File(boardName);
-        System.out.println(boardFile.getAbsolutePath());
-        Scanner fileReader = new Scanner(boardFile);
-        int i = 0;
-        while (fileReader.hasNextLine()) {
-            String[] data = fileReader.nextLine().split(";");
-            int j = 0;
-            for (String sign : data) {
-                if (sign.equals("x")) {
-                    board[i][j] = 1;
-                    j++;
-                } else if (sign.equals("o")) {
-                    board[i][j] = -1;
-                    j++;
-                } else {
-                    board[i][j] = 0;
-                    j++;
-                }
-            }
-            i++;
-        }
-        return board;
-    }
-    public static int Column(int[][] board) {
-        for (int sign=-1;sign<=1;sign=sign+2) {
-            for (int i = 0; i < 3; i++) {
-                if (board[0][i] == sign && board[1][i] == sign && board[2][i] == sign) {
-                    return sign;
-                }
-            }
-        }
-        return 0;
-    }
-    public static int Row(int[][] board) {
+
+    public static int checkRows(int[][] board) {
         for (int[] row : board) {
             if (Arrays.equals(row, new int[]{1, 1, 1})) {
                 return 1;
@@ -54,32 +20,70 @@ public class TicTacToe {
         }
         return 0;
     }
-    public static int Diagonal(int[][] board) {
-        for (int sign : new int[]{-1, 1}) {
 
-            if (board[0][0] == sign && board[1][1] == sign && board[2][2] == sign) {
-                return sign;
-            } else if (board[2][0] == sign && board[1][1] == sign && board[0][2] == sign) {
-                return sign;
+    public static int checkColumns(int[][] board) {
+        for (int mark : new int[]{-1, 1}) {
+            for (int i = 0; i < 3; i++) {
+                if (board[0][i] == mark && board[1][i] == mark && board[2][i] == mark) {
+                    return mark;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static int checkDiagonals(int[][] board) {
+        for (int mark : new int[]{-1, 1}) {
+
+            if (board[0][0] == mark && board[1][1] == mark && board[2][2] == mark) {
+                return mark;
+            } else if (board[2][0] == mark && board[1][1] == mark && board[0][2] == mark) {
+                return mark;
             }
 
         }
         return 0;
     }
-    public static Result checkBoard(String boardName) throws FileNotFoundException {
-        //Creating board from .csv file
+
+    public static Result checkBoard(String boardFileName) {
         int[][] board = new int[3][3];
-        board=GetBoard(boardName);
-        //Checking rows, columns and diagonals of board with predefined functions
-        if (Row(board) == 1 || Column(board) == 1 || Diagonal(board) == 1) {
+        try {
+            File boardFile = new File(boardFileName);
+            System.out.println(boardFile.getAbsolutePath());
+            Scanner fileReader = new Scanner(boardFile);
+            int rowCount = 0;
+            while (fileReader.hasNextLine()) {
+                String[] data = fileReader.nextLine().split(";");
+                int columnCount = 0;
+                for (String mark : data) {
+                    if (mark.equals("x")) {
+                        board[rowCount][columnCount] = 1;
+                        columnCount++;
+                    } else if (mark.equals("o")) {
+                        board[rowCount][columnCount] = -1;
+                        columnCount++;
+                    } else {
+                        board[rowCount][columnCount] = 0;
+                        columnCount++;
+                    }
+                }
+                rowCount++;
+            }
+        } catch (FileNotFoundException exception) {
+            System.out.println("Exception occured");
+            exception.printStackTrace();
+        }
+
+
+        if (checkRows(board) == 1 || checkColumns(board) == 1 || checkDiagonals(board) == 1) {
             return Result.X_WON;
-        } else if (Row(board) == -1 || Column(board) == -1 || Diagonal(board) == -1) {
+        } else if (checkRows(board) == -1 || checkColumns(board) == -1 || checkDiagonals(board) == -1) {
             return Result.O_WON;
         }
-        //Checking if board has unsigned field
+
         for (int[] row : board){
-            for (int sign:row){
-                if(sign == 0){
+            for (int mark:row){
+                if(mark == 0){
                     return Result.NOT_FINISHED;
                 }
             }
@@ -89,8 +93,8 @@ public class TicTacToe {
     }
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Result GameResult = checkBoard("boards/tick1.csv");
-        System.out.println(GameResult);
+    public static void main(String[] args) {
+        Result res = checkBoard("boards/tick3.csv");
+        System.out.println(res);
     }
 }
