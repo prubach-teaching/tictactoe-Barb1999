@@ -8,15 +8,15 @@ public class TicTacToe {
 
     public enum Result { NOT_FINISHED, NO_WINNER, X_WON, O_WON }
 
-    public static Result checkBoard(String boardFileName) {
+    public static Result checkBoard(String boardFileName) throws FileNotFoundException {
         File boardFile = new File(boardFileName);
         System.out.println(boardFile.getAbsolutePath());
 
-         Scanner p = new Scanner(boardFile);
+        Scanner p = new Scanner(boardFile);
         int kolumny = 5;
         int wiersze = 3;
          
-        char[][] Gra = new char[wiersze][kolumny];
+         char[][] Gra = new char[wiersze][kolumny];
 
             for (int rzad = 0; p.hasNextLine() && rzad < wiersze; row++) {
                 char[] abc = p.nextLine().toCharArray();
