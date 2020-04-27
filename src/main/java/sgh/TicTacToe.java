@@ -18,7 +18,7 @@ public class TicTacToe {
          
          char[][] Gra = new char[wiersze][kolumny];
 
-            for (int rzad = 0; p.hasNextLine() && rzad < wiersze; row++) {
+            for (int rzad = 0; p.hasNextLine() && rzad < wiersze; rzad++) {
                 char[] abc = p.nextLine().toCharArray();
                 for (int i = 0; i < kolumny && i < abc.length; i++) {
                     Gra[rzad][i] = abc[i];
