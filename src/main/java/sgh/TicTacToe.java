@@ -12,7 +12,9 @@ public class TicTacToe {
         File boardFile = new File(boardFileName);
         System.out.println(boardFile.getAbsolutePath());
 
-
+        Scanner p = new Scanner(boardFile);
+        int kolumny = 5;
+        int wiersze = 3;
          
             char[][] Gra = new char[wiersze][kolumny];
 
@@ -29,43 +31,23 @@ public class TicTacToe {
                     if (Gra[m][n] == 'x') {
                     	Gra[m][n] = 1;
                     }
-                    else if (Gra[m][n] == 'o') {
-                    		Gra[m][n] = 100;
-                    }
-                    else if (Gra[m][n] == ';') {
-                    	    Gra[m][n] = 0;
-                    }
+                    else if (Gra[m][n] == 'o') { Gra[m][n] = 100;}
+                    else if (Gra[m][n] == ';') {Gra[m][n] = 0;}
                 }
             }
 
             for (int m=0; m<wiersze; m++) {
-                if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 3) {
-                    return Result.X_WON;
-                }
-                else if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 300) {
-                    return Result.O_WON;
-                }
+                if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 3) {return Result.X_WON;}
+                else if ((Gra[m][0] + Gra[m][2] + Gra[m][4]) == 300) {return Result.O_WON;}
             }
-
-            //check columns for winning
             for (int n=0; n<kolumny; n++) {
-                if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 3) {
-                    return Result.X_WON;
-                }
-                else if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 300) {
-                    return Result.O_WON;
-                }
+                if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 3) {return Result.X_WON;}
+                else if ((Gra[0][n] + Gra[1][n] + Gra[2][n]) == 300) {return Result.O_WON;}
             }
-            if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 3) {
-                return Result.X_WON;
-            } else if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 300) {
-                return Result.O_WON;
-            }
-            if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 3) {
-                return Result.X_WON;
-            } else if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 300) {
-                return Result.O_WON;
-            }
+            if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 3) {return Result.X_WON;}
+            else if ((Gra[0][0] + Gra[1][2] + Gra[2][4]) == 300) {return Result.O_WON;}
+            if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 3) {return Result.X_WON;} 
+            else if ((Gra[0][4] + Gra[1][2] + Gra[2][0]) == 300) {return Result.O_WON;}
             for (int m = 0; m < wiersze; m++) {
                 
                 for (int n = 0; n < kolumny; n++) {
